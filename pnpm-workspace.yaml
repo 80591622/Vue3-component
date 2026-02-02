@@ -1,0 +1,4 @@
+packages:
+  - 'packages/*' # 组件库源码
+  - 'examples' # 示例项目
+  - 'docs' # 文档项目

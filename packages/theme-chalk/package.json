@@ -1,0 +1,16 @@
+{
+  "name": "@vue-nova/theme-chalk",
+  "version": "1.0.0",
+  "description": "Your UI Theme",
+  "main": "dist/index.css",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "sass src/index.scss dist/index.css --style compressed"
+  },
+  "devDependencies": {
+    "sass": "1.70.0"
+  }
+}

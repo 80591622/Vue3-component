@@ -1,0 +1,75 @@
+@use 'mixins/mixins' as *;
+@use 'common/var' as *;
+
+@include b(button) {
+  // BEM规范
+  align-items: center;
+  display: inline-flex;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid #fafafa;
+  border-radius: 5px;
+  user-select: none;
+  min-height: 40px;
+  line-height: 1;
+  vertical-align: middle;
+  padding: 0 20px;
+  gap: 8px;
+
+  // 确保内部元素垂直居中
+  &>* {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @include m(medium) {
+    padding: 0 20px;
+  }
+
+  @include m(small) {
+    padding: 0 18px;
+  }
+
+  @include m(large) {
+    padding: 0 25px;
+  }
+
+  // 禁用状态样式
+  @include when(disabled) {
+
+    // 针对不同类型处理
+    &,
+    &:hover,
+    &:focus {
+      cursor: not-allowed;
+    }
+  }
+
+  // 圆角样式
+  @include when(round) {
+    border-radius: 20px;
+  }
+
+  // 不同类型按钮的样式
+  @include m(primary) {
+    //渲染不同类型的button
+    @include button-variant($color-white, $color-primary, $color-primary);
+  }
+
+  @include m(success) {
+    @include button-variant($color-white, $color-success, $color-success);
+  }
+
+  @include m(warning) {
+    @include button-variant($color-white, $color-warning, $color-warning);
+  }
+
+  @include m(danger) {
+    @include button-variant($color-white, $color-danger, $color-danger);
+  }
+
+  @include m(info) {
+    @include button-variant($color-white, $color-info, $color-info);
+  }
+}

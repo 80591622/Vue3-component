@@ -1,0 +1,129 @@
+import { ExtractPropTypes, InjectionKey, PropType, SetupContext } from 'vue';
+
+export type Key = string | number;
+
+// 树节点接口
+export interface TreeNode extends Required<TreeOption> {
+  level: number;
+  rawNode: TreeOption;
+  children: TreeNode[];
+  isLeaf: boolean;
+  parentKey: Key | undefined;
+}
+
+export interface TreeOption {
+  label?: Key;
+  key?: Key;
+  children?: TreeOption[];
+  isLeaf?: boolean;
+  disabled?: boolean;
+  [key: string]: unknown; // 任意接口
+}
+
+export const treeProps = {
+  data: {
+    type: Array as PropType<TreeOption[]>,
+    default: () => [],
+  },
+  defaultExpandedKeys: {
+    type: Array as PropType<Key[]>,
+    default: () => [],
+  },
+  labelField: {
+    type: String,
+    default: 'label',
+  },
+  keyField: {
+    type: String,
+    default: 'key',
+  },
+  childrenField: {
+    type: String,
+    default: 'children',
+  },
+  onLoad: Function as PropType<(node: TreeOption) => Promise<TreeOption[]>>,
+  selectedKeys: {
+    type: Array as PropType<Key[]>,
+    default: undefined,
+  },
+  multiple: {
+    type: Boolean,
+    default: false,
+  },
+  selectable: {
+    type: Boolean,
+    default: true,
+  },
+  defaultCheckedKeys: {
+    type: Array as PropType<Key[]>,
+    default: () => [],
+  },
+  showCheckbox: {
+    type: Boolean,
+    default: false,
+  },
+} as const;
+
+export const treeNodeProps = {
+  node: {
+    type: Object as PropType<TreeNode>,
+    required: true,
+  },
+  expanded: {
+    type: Boolean,
+    required: true,
+  },
+  loadingKeys: {
+    type: Object as PropType<Set<Key>>,
+    required: true,
+  },
+  selectedKeys: {
+    type: Array as PropType<Key[]>,
+    default: () => [],
+  },
+  showCheckbox: {
+    type: Boolean,
+    default: false,
+  },
+  checked: {
+    type: Boolean,
+    default: false,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  indeterminate: {
+    type: Boolean,
+    default: false,
+  },
+} as const;
+
+export const treeNodeEmits = {
+  toggle: (node: TreeNode) => true,
+  select: (node: TreeNode) => true,
+  check: (node: TreeNode, val: boolean) => typeof val === 'boolean',
+};
+
+export const treeEmits = {
+  // 内部发射的事件用于同步响应式数据
+  'update:selectedKeys': (key: Key[]) => true,
+};
+
+export type TreeNodeProps = Partial<ExtractPropTypes<typeof treeNodeProps>>;
+
+export type TreeProps = Partial<ExtractPropTypes<typeof treeProps>>;
+
+export interface TreeContext {
+  slots: SetupContext['slots'];
+  // emit: SetupContext<typeof treeEmits>['emit'];
+}
+
+export const treeInjectKey: InjectionKey<TreeContext> = Symbol();
+
+export const treeNodeContentProp = {
+  node: {
+    type: Object as PropType<TreeNode>,
+    required: true,
+  },
+};

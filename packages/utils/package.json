@@ -1,0 +1,19 @@
+{
+  "name": "@vue-nova/utils",
+  "version": "1.0.0",
+  "description": "Your UI Utilities",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "typescript": "5.2.2",
+    "vite": "5.4.8"
+  }
+}
