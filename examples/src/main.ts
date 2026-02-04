@@ -9,8 +9,9 @@ import Checkbox from '@vue-nova/components/checkbox';
 import Button from '@vue-nova/components/button';
 import Input from '@vue-nova/components/input';
 import { Form, FormItem } from '@vue-nova/components/form';
+import Upload from '@vue-nova/components/upload';
 
-const plugins = [Icon, Tree, Checkbox, Button, Input, Form, FormItem];
+const plugins = [Icon, Tree, Checkbox, Button, Input, Form, FormItem, Upload];
 const app = createApp(App);
 
 // 全局注册组件
