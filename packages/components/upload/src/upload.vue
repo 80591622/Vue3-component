@@ -10,9 +10,7 @@
           <z-icon>
             <CloudUploadOutline />
           </z-icon>
-          <div :class="bem.e('text')">
-            将文件拖到此处，或<em>点击上传</em>
-          </div>
+          <div :class="bem.e('text')">将文件拖到此处，或<em>点击上传</em></div>
         </div>
       </template>
     </UploadContent>
@@ -85,10 +83,7 @@
           </button>
           <button
             type="button"
-            :class="[
-              bem.e('remove'),
-              { 'is-disabled': file.status === 'uploading' },
-            ]"
+            :class="[bem.e('remove'), { 'is-disabled': file.status === 'uploading' }]"
             :disabled="file.status === 'uploading'"
             @click="handleRemove(file)"
           >
@@ -240,16 +235,7 @@ const uploadContentProps = computed<UploadContentProps>(() => ({
   onSuccess: (res, rawFile) => {
     const uploadFile = findFile(rawFile)!;
     uploadFile.status = 'success';
-    const fileList = uploadFiles.value;
-    const index = fileList.indexOf(uploadFile);
-    if (index >= 0) {
-      fileList.splice(index, 1);
-    }
-    uploadFiles.value = [...fileList];
     props.onSuccess(res, uploadFile, uploadFiles.value);
-    if (uploadFiles.value.length === 0) {
-      window.alert('上传成功');
-    }
   },
 }));
 </script>

@@ -56,6 +56,41 @@ export const baseProps = {
     type: Boolean,
     default: true,
   },
+  // 是否启用分片上传（用于大文件）
+  chunkUpload: {
+    type: Boolean,
+    default: false,
+  },
+  // 分片大小（字节）
+  chunkSize: {
+    type: Number,
+    default: 2 * 1024 * 1024,
+  },
+  // 分片并发数
+  chunkConcurrency: {
+    type: Number,
+    default: 3,
+  },
+  // 分片失败重试次数
+  chunkRetry: {
+    type: Number,
+    default: 2,
+  },
+  // 分片上传接口（默认 `${action}/chunk`）
+  chunkAction: {
+    type: String,
+    default: '',
+  },
+  // 合并接口（默认 `${action}/merge`）
+  mergeAction: {
+    type: String,
+    default: '',
+  },
+  // 断点续传查询接口（默认 `${action}/status`）
+  statusAction: {
+    type: String,
+    default: '',
+  },
 } as const;
 
 export type UploadRawFile = File & { uid: number };

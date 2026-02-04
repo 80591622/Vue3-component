@@ -30,6 +30,7 @@ import { getId, UploadRawFile } from './upload';
 import { ref } from 'vue';
 import { uploadContentProps } from './uploadContent';
 import { httpRequest } from './ajax';
+import { uploadByChunk } from './chunkUpload';
 import UploadDragger from './uploadDragger.vue';
 const bem = createBEM('upload');
 
@@ -42,15 +43,46 @@ const props = defineProps(uploadContentProps);
 
 const inputRef = ref<HTMLInputElement>();
 const xhrMap = new Map<number, XMLHttpRequest>();
+const chunkControllers = new Map<number, Set<AbortController>>();
 const handleClick = () => {
   inputRef.value!.value = '';
   inputRef.value!.click();
+};
+
+const uploadChunked = async (rawFile: UploadRawFile) => {
+  await uploadByChunk({
+    file: rawFile,
+    action: props.action,
+    headers: props.headers,
+    chunkSize: props.chunkSize,
+    concurrency: props.chunkConcurrency,
+    retry: props.chunkRetry,
+    chunkAction: props.chunkAction || undefined,
+    mergeAction: props.mergeAction || undefined,
+    statusAction: props.statusAction || undefined,
+    controllers: chunkControllers,
+    onProgress: (percentage) => {
+      props.onProgress({ percentage } as any, rawFile);
+    },
+    onError: (err) => {
+      props.onError(err, rawFile);
+    },
+    onSuccess: (res) => {
+      props.onSuccess(res, rawFile);
+    },
+  });
 };
 
 const upload = (rawFile: UploadRawFile) => {
   inputRef.value!.value = '';
   let result = props.beforeUpload(rawFile);
   if (result === false) return props.onRemove(rawFile);
+
+  // 如果启用分片上传，走分片逻辑；否则走普通上传
+  if (props.chunkUpload && rawFile.size > props.chunkSize) {
+    uploadChunked(rawFile).catch((err) => props.onError(err, rawFile));
+    return;
+  }
 
   const { method, headers, name, action, data } = props;
   const xhr = httpRequest({
@@ -112,6 +144,11 @@ const abort = (rawFiles: UploadRawFile[]) => {
     if (xhr) {
       xhr.abort();
       xhrMap.delete(rawFile.uid);
+    }
+    const controllers = rawFile.uid ? chunkControllers.get(rawFile.uid) : undefined;
+    if (controllers) {
+      controllers.forEach((c) => c.abort());
+      controllers.clear();
     }
   }
 };
