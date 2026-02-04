@@ -1,0 +1,217 @@
+@use 'mixins/mixins' as *;
+@use 'common/var' as *;
+
+@include b(upload) {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+  min-height: 120px;
+  color: #606266;
+  text-align: center;
+  cursor: default;
+
+  @include e(content) {
+    position: relative;
+  }
+
+  input[type='file'] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    pointer-events: none;
+  }
+
+  @include e(dragger) {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 24px 16px;
+    min-height: 120px;
+    width: 100%;
+    border: 1px dashed #dcdfe6;
+    border-radius: 6px;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      border-color: $color-primary;
+      color: $color-primary;
+      background-color: #f5f7fa;
+    }
+
+    &.is-dragover {
+      border-color: $color-primary;
+      background-color: #f0f7ff;
+      color: $color-primary;
+    }
+  }
+
+  @include e(trigger) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 24px 16px;
+    min-height: 120px;
+    width: 100%;
+  }
+
+  @include e(text) {
+    font-size: 14px;
+    color: #606266;
+
+    em {
+      color: $color-primary;
+      font-style: normal;
+    }
+  }
+
+  @include e(list) {
+    list-style: none;
+    margin: 0;
+    padding: 0 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  @include e(item) {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    background-color: #f9fafb;
+  }
+
+  @include e(thumb) {
+    width: 44px;
+    height: 44px;
+    border-radius: 6px;
+    background-color: #fff;
+    border: 1px solid #e5e7eb;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    img,
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  @include e(info) {
+    flex: 1;
+    min-width: 0;
+  }
+
+  @include e(name) {
+    font-size: 14px;
+    color: #111827;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @include e(meta) {
+    font-size: 12px;
+    color: #6b7280;
+  }
+
+  @include e(progress) {
+    margin-top: 6px;
+    height: 4px;
+    background-color: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+
+    span {
+      display: block;
+      height: 100%;
+      background-color: $color-primary;
+      width: 0;
+      transition: width 0.2s ease;
+    }
+  }
+
+  @include e(preview) {
+    border: none;
+    background: transparent;
+    color: $color-primary;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  @include e(actions) {
+    display: inline-flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  @include e(remove) {
+    border: none;
+    background: transparent;
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 13px;
+
+    &.is-disabled {
+      color: #9ca3af;
+      cursor: not-allowed;
+    }
+  }
+
+  @include e(upload-one) {
+    border: none;
+    background: transparent;
+    color: $color-primary;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  @include e(cancel) {
+    border: none;
+    background: transparent;
+    color: #f59e0b;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  @include e(retry) {
+    border: none;
+    background: transparent;
+    color: #10b981;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  @include e(footer) {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 16px 12px;
+  }
+
+  @include e(submit) {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid $color-primary;
+    background-color: $color-primary;
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+  }
+}

@@ -36,7 +36,7 @@ export const baseProps = {
     type: String,
     default: '',
   },
-  methods: {
+  method: {
     type: String,
     default: 'post',
   },
@@ -48,11 +48,19 @@ export const baseProps = {
     type: Object as PropType<Record<string, string>>,
     default: () => ({}) as const,
   },
+  drag: {
+    type: Boolean,
+    default: false,
+  },
+  autoUpload: {
+    type: Boolean,
+    default: true,
+  },
 } as const;
 
 export type UploadRawFile = File & { uid: number };
 export type UploadProgressEvent = ProgressEvent & {
-  percent: number;
+  percentage: number;
 };
 const NOOP = () => {};
 export const uploadProps = {
@@ -71,7 +79,9 @@ export const uploadProps = {
     default: NOOP,
   },
   beforeRemove: {
-    type: Function as PropType<(file: UploadFile, uploadFiles: UploadFiles) => void>,
+    type: Function as PropType<
+      (file: UploadFile, uploadFiles: UploadFiles) => Promise<boolean> | boolean
+    >,
     default: NOOP,
   },
   onRemove: {
@@ -99,3 +109,5 @@ export const uploadProps = {
 } as const;
 
 export type UploadProps = ExtractPropTypes<typeof uploadProps>;
+
+export const getId = () => Date.now();
