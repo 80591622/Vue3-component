@@ -11,21 +11,35 @@
   @include e(wrapper) {
     box-sizing: border-box;
     display: inline-flex;
-    border: 1px solid #ccc;
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
     flex: 1;
     align-items: center;
     position: relative;
     vertical-align: middle;
+    background-color: $color-white;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      border-color: #c0c4cc;
+    }
+
+    &:focus-within {
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px rgba(64, 158, 255, 0.15);
+    }
   }
 
   @include e(suffix) {
     display: inline-flex;
-    margin-right: 5px;
+    margin-right: 8px;
+    color: #9ca3af;
   }
 
   @include e(prefix) {
     display: inline-flex;
-    margin-left: 5px;
+    margin-left: 8px;
+    color: #9ca3af;
   }
 
   @include e(inner) {
@@ -34,9 +48,20 @@
     border: none;
     background: none;
     appearance: none;
-    padding: 0 10px;
+    padding: 0 12px;
     width: 100%;
-    height: 30px;
+    height: 34px;
+    font-size: 14px;
+    color: #1f2937;
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+
+    &:disabled {
+      color: #9ca3af;
+      cursor: not-allowed;
+    }
   }
 
   // z-input__suffix
@@ -44,24 +69,39 @@
   @include b(input-group) {
     @include e(append) {
       display: inline-flex;
-      padding: 0 10px;
-      margin-left: 5px;
-      line-height: 32px;
+      padding: 0 12px;
+      margin-left: 6px;
+      line-height: 34px;
       vertical-align: middle;
-      border: 1px solid #ccc;
+      border: 1px solid #dcdfe6;
+      border-radius: 6px;
+      background-color: #f9fafb;
+      color: #374151;
       // box-shadow: 0 0 0 1px #ccc inset, 0 1px 0 rgba(0, 0, 0, 0.05);
     }
 
     @include e(prepend) {
       display: inline-flex;
-      padding: 0 10px;
-      margin-right: 5px;
-      line-height: 32px;
+      padding: 0 12px;
+      margin-right: 6px;
+      line-height: 34px;
       vertical-align: middle;
-      border: 1px solid #ccc;
+      border: 1px solid #dcdfe6;
+      border-radius: 6px;
+      background-color: #f9fafb;
+      color: #374151;
       // box-shadow: 1px 0 0 0 #ccc inset, 0 1px 0 rgba(0, 0, 0, 0.05);
     }
   }
 
+  .z-icon {
+    color: #9ca3af;
+    cursor: pointer;
+    margin-right: 6px;
+
+    &:hover {
+      color: #6b7280;
+    }
+  }
 
 }

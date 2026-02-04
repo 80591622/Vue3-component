@@ -3,12 +3,15 @@
 @include b(tree) {
   display: inline-block;
   width: 100%;
+  color: #374151;
 }
 
 @include b('tree-node') {
-  padding: 5px 0;
-  font-size: 16px;
-  line-height: 25px; // 与图标高度一致，确保垂直对齐
+  padding: 6px 8px;
+  font-size: 14px;
+  line-height: 24px; // 与图标高度一致，确保垂直对齐
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
 
   @include e('label') {
     cursor: pointer;
@@ -22,22 +25,24 @@
   }
 
   &:hover {
-    background: #ccc;
+    background: #f3f4f6;
   }
 
   @include e('content') {
     display: flex;
     align-items: center;
+    gap: 6px;
   }
 
   @include e('expand-icon') {
     display: inline-flex;
-    margin: 0 15px;
+    margin: 0 8px 0 2px;
     align-items: center;
     justify-content: center;
     transform: rotate(0);
-    transition: transform .2s ease-in;
+    transition: transform 0.2s ease-in, color 0.2s ease;
     cursor: pointer;
+    color: #6b7280;
 
     &.expanded {
       transform: rotate(90deg);
@@ -55,13 +60,7 @@
   }
 
   @include when(selected) {
-    background-color: #409EFF;
-    color: #fff;
-    border-radius: 4px;
-    padding: 2px 8px;
-    margin: 0 4px;
-
+    background-color: rgba(64, 158, 255, 0.12);
+    color: #1d4ed8;
   }
-
-
 }

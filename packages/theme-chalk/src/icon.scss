@@ -5,4 +5,14 @@
   height: 1rem;
   display: inline-flex;
   vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  line-height: 1;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+  }
 }
