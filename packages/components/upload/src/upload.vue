@@ -241,7 +241,15 @@ const uploadContentProps = computed<UploadContentProps>(() => ({
     const uploadFile = findFile(rawFile)!;
     uploadFile.status = 'success';
     const fileList = uploadFiles.value;
-    props.onSuccess(res, uploadFile, fileList);
+    const index = fileList.indexOf(uploadFile);
+    if (index >= 0) {
+      fileList.splice(index, 1);
+    }
+    uploadFiles.value = [...fileList];
+    props.onSuccess(res, uploadFile, uploadFiles.value);
+    if (uploadFiles.value.length === 0) {
+      window.alert('上传成功');
+    }
   },
 }));
 </script>
