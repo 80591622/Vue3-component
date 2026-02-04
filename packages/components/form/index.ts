@@ -7,6 +7,7 @@ const FormItem = withInstall(_FormItem);
 
 export { Form, FormItem };
 
+export type FormInstance = InstanceType<typeof Form>;
 // 添加类型可以在模版中被解析
 declare module 'vue' {
   export interface GlobalComponents {

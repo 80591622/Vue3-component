@@ -113,6 +113,7 @@
   </z-input>
   <h2>表单</h2>
   <z-form
+    ref="formRef"
     :model="state"
     :rules="{
       username: {
@@ -134,8 +135,22 @@
       ></z-input>
       <template #label> 用户名 </template>
     </z-form-item>
+
+    <z-form-item
+      label="请输入密码"
+      prop="password"
+      :rules="[{ required: true, message: '请输入密码', trigger: 'blur' }]"
+    >
+      <z-input
+        type="password"
+        placeholder="请输入密码"
+        v-model="state.password"
+      ></z-input>
+      <template #label> 密码 </template>
+    </z-form-item>
   </z-form>
   <z-button
+    @click="validate"
     style="margin-top: 10px"
     size="medium"
     type="primary"
@@ -155,6 +170,7 @@ import {
   createAsyncTreeData,
   handleLoad,
 } from './mock/treeData';
+import type { FormInstance } from '@vue-nova/components/form';
 
 // 为不同的tree组件生成独立的数据，确保数据隔离
 // 1. 格式化数据自定义属性名 - 使用独立生成的树数据
@@ -169,6 +185,17 @@ const virtualTreeData = ref<TreeOption[]>(generateTreeData(3, 'v-')); // 使用�
 // 4. checkbox - 使用独立生成的树数据
 const checkboxTreeData = ref<TreeOption[]>(generateTreeData(4, 'c-')); // 使用不同的父键前缀
 
+const formRef = ref<FormInstance>();
+const validate = () => {
+  formRef.value
+    ?.validate()
+    .then(() => {
+      console.log('验证通过');
+    })
+    .catch(() => {
+      console.log('验证失败');
+    });
+};
 // 选中的节点键值
 const value = ref<Key[]>([]);
 

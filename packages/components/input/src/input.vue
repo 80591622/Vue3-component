@@ -84,7 +84,7 @@ const attrs = useAttrs();
 watch(
   () => props.modelValue,
   () => {
-    formItemContext?.validate('change');
+    formItemContext?.validate('change').catch(() => {});
     setNativeInputValue();
   }
 );
@@ -150,7 +150,7 @@ const handleFocus = (e: FocusEvent) => {
 };
 
 const handleBlur = (e: FocusEvent) => {
-  formItemContext?.validate('blur');
+  formItemContext?.validate('blur').catch(() => {});
   emit('blur', e);
 };
 </script>

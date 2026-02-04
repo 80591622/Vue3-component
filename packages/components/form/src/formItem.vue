@@ -30,13 +30,12 @@ import {
   FormItemValidateState,
   FormItemContextKey,
 } from './formItem';
-import { computed, inject, provide, ref } from 'vue';
+import { computed, inject, onMounted, provide, ref } from 'vue';
 import { FormItemRule, MaybeArray } from './formItem';
 import { FormContextKey } from './form';
 import AsyncValidator, { Values } from 'async-validator';
 
 const formContext = inject(FormContextKey);
-console.log('formContext', formContext);
 
 const bem = createBEM('form-item');
 
@@ -115,6 +114,7 @@ const validate: FormItemContext['validate'] = async (trigger, callback?) => {
     })
     .catch((err: Values) => {
       onValidationFailed(err);
+      return Promise.reject(err);
     });
 };
 
@@ -124,4 +124,8 @@ const context: FormItemContext = {
 };
 
 provide(FormItemContextKey, context);
+
+onMounted(() => {
+  formContext?.addField(context); // 将自己的上下文传递给了父级
+});
 </script>
